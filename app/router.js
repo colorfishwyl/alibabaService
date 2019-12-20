@@ -6,7 +6,8 @@
 module.exports = app => {
   const { router, controller } = app;
   // router.get('/', controller.home.index);
-  router.redirect('/', '/api/hello.html', 302);
+  // router.get('/', 'home.index');
+  router.redirect('/', '/api/3Dmap.html', 302);
 };
 
 // 配置的中间件是全局的，会处理每一次请求。 如果你只想针对单个路由生效，可以直接在 app/router.js 中实例化和挂载，如下：

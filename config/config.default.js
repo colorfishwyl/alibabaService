@@ -69,6 +69,21 @@ module.exports = appInfo => {
     buffer: true, // in prod env, false in other envs
   };
 
+  config.view = {
+    defaultViewEngine: 'nunjucks',
+    mapping: {
+      '.tpl': 'nunjucks',
+      '.html': 'nunjucks'
+    },
+  };
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+    // 下面这条加上才能共享跨域session，同时前端ajax请求也要加上响应的参数
+    credentials: true,
+  };
+
   return {
     ...config,
     ...userConfig,
