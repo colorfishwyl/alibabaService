@@ -3,11 +3,11 @@
 'use strict';
 
 /**内置的 appInfo 有
-pkg	package.json
-name	应用名，同 pkg.name
-baseDir	应用代码的目录
-HOME	用户目录，如 admin 账户为 /home/admin
-root	应用根目录，只有在 local 和 unittest 环境下为 baseDir，其他都为 HOME。**/
+ pkg    package.json
+ name    应用名，同 pkg.name
+ baseDir    应用代码的目录
+ HOME    用户目录，如 admin 账户为 /home/admin
+ root    应用根目录，只有在 local 和 unittest 环境下为 baseDir，其他都为 HOME。**/
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -34,7 +34,7 @@ module.exports = appInfo => {
   // token
   config.jwt = {
     enable: false,
-    ignore: [ '/login' ],
+    ignore: ['/login'],
     jwtKey: 'wangyalin',
   };
 
@@ -48,7 +48,7 @@ module.exports = appInfo => {
   };
 
   config.multipart = {
-    whitelist: [ '.png', '.jpg', '.pdf', 'doc' ], // 覆盖整个白名单，只允许上传 '.png' 格式
+    whitelist: ['.png', '.jpg', '.pdf', 'doc'], // 覆盖整个白名单，只允许上传 '.png' 格式
   };
 
   config.security = {
@@ -61,9 +61,10 @@ module.exports = appInfo => {
   // static files and cache files
   config.static = {
     // 静态化访问前缀,如：`http://127.0.0.1:7001/api/Amap/index.html`
-    prefix: '/api',
-    dir: path.join(appInfo.baseDir, 'app/public'), // `String` or `Array:[dir1, dir2, ...]` 静态化目录,可以设置多个静态化目录
-    dynamic: true, // 如果当前访问的静态资源没有缓存，则缓存静态文件，和`preload`配合使用；
+    prefix: '/public/',
+    dir: [ path.join(appInfo.baseDir, 'app/public'), { prefix: '/app/', dir: path.join(appInfo.baseDir, 'app/web') } ], // `String` or `Array:[dir1, dir2, ...]` 静态化目录,可以设置多个静态化目录
+    // dir:  path.join(appInfo.baseDir, 'app/public'), // `String` or `Array:[dir1, dir2, ...]` 静态化目录,可以设置多个静态化目录
+    dynamic: true,
     preload: false,
     maxAge: 31536000, // in prod env, 0 in other envs
     buffer: true, // in prod env, false in other envs
@@ -76,6 +77,18 @@ module.exports = appInfo => {
       '.html': 'nunjucks'
     },
   };
+
+  // sql
+  config.sequelize = {
+    dialect: 'postgres', // support: mysql, mariadb, postgres, mssql
+    database: 'postgres',
+    host: '47.52.102.96',
+    // host: '127.0.0.1',
+    port: 5432,
+    username: 'postgres',
+    password: 'postgres',
+  };
+
 
   config.cors = {
     origin: '*',
